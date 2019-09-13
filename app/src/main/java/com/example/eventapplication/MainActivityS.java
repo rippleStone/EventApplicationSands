@@ -2,6 +2,7 @@ package com.example.eventapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -21,6 +22,8 @@ public class MainActivityS extends AppCompatActivity {
     CheckBox chkPhoto, chkEnter, chkFood;
     Button addBtn;
     String UserID;
+    Integer count;
+    String a1,a2,a3,a4,a5;
 
     DatabaseReference dbRef;
     Event event;
@@ -29,6 +32,15 @@ public class MainActivityS extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_s);
+
+        Intent intent = getIntent();
+        count = intent.getIntExtra(Main3ActivityS.COUNT,0);
+
+        a1 = intent.getStringExtra(Main3ActivityS.A1);
+        a2 = intent.getStringExtra(Main3ActivityS.A2);
+        a3 = intent.getStringExtra(Main3ActivityS.A3);
+        a4 = intent.getStringExtra(Main3ActivityS.A4);
+        a5 = intent.getStringExtra(Main3ActivityS.A5);
 
         txtName = findViewById(R.id.nameAdd);
         txtDate = findViewById(R.id.dateAdd);
@@ -56,11 +68,19 @@ public class MainActivityS extends AppCompatActivity {
                 dbRef = FirebaseDatabase.getInstance().getReference().child("Event").child(UserID);
 
                 try{
-                    if(TextUtils.isEmpty(txtName.getText().toString())|| TextUtils.isEmpty(txtDate.getText().toString())||
+                    if(count>=6){
+                        Toast.makeText(getApplicationContext(),"Cannot add more events, Delete a past event and add! ",Toast.LENGTH_LONG).show();
+                    }
+                    else if(TextUtils.isEmpty(txtName.getText().toString())|| TextUtils.isEmpty(txtDate.getText().toString())||
                             TextUtils.isEmpty(txtTime.getText().toString()) || TextUtils.isEmpty(txtPlace.getText().toString())||
                             TextUtils.isEmpty(txtnumOfGuests.getText().toString()) || TextUtils.isEmpty(txtBudget.getText().toString()) ||
                             TextUtils.isEmpty(txtTheme.getText().toString()) ){
                         Toast.makeText(getApplicationContext(),"One or more empty fields",Toast.LENGTH_LONG).show();
+                    }
+
+                    else if(txtName.getText().toString().equalsIgnoreCase(a1)|| txtName.getText().toString().equalsIgnoreCase(a2)|| txtName.getText().toString().equalsIgnoreCase(a3)||
+                            txtName.getText().toString().equalsIgnoreCase(a4)|| txtName.getText().toString().equalsIgnoreCase(a5)){
+                        Toast.makeText(getApplicationContext(),"Enter a unique event name",Toast.LENGTH_LONG).show();
                     }
 
                     else if(!((txtDate.getText().toString()).matches("\\d{2}-\\d{2}-\\d{4}") &&

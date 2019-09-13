@@ -20,8 +20,16 @@ import java.util.ArrayList;
 public class Main3ActivityS extends AppCompatActivity {
 
     public static final String EVENT_NAME = "event_name";
+    public static final String COUNT = "count";
+    public static final String A1 = "a1";
+    public static final String A2 = "a2";
+    public static final String A3 = "a3";
+    public static final String A4 = "a4";
+    public static final String A5 = "a5";
+
     Button esbtn1, esbtn2, esbtn3, esbtn4, esbtn5;
     String UserID;
+    Integer j;
     DatabaseReference dbRef;
 
     String a1, a2, a3, a4, a5;
@@ -73,6 +81,7 @@ public class Main3ActivityS extends AppCompatActivity {
                     }
                     i++;
                 }
+                j = i;
             }
 
             @Override
@@ -85,6 +94,12 @@ public class Main3ActivityS extends AppCompatActivity {
 
     public void onClick(View view){
         Intent intent = new Intent(Main3ActivityS.this, MainActivityS.class);
+        intent.putExtra(COUNT,j);
+        intent.putExtra(A1,a1);
+        intent.putExtra(A2,a2);
+        intent.putExtra(A3,a3);
+        intent.putExtra(A4,a4);
+        intent.putExtra(A5,a5);
         startActivity(intent);
     }
 
